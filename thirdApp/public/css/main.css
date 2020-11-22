@@ -1,0 +1,45 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+main {
+    margin: 1rem;
+}
+
+.main-header {
+    width: 100%;
+    height: 3.5rem;
+    background-color: #485b8f;
+    padding: 0 1.5rem;
+}
+
+.main-header__nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.main-header__links-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-header__links {
+    padding: 0;
+    margin: 0 1rem;
+}
+
+.main-header__links a {
+    text-decoration: none;
+    color: white;
+}
+
+.main-header__links a:hover,
+.main-header__links a:active,
+.main-header__links a.active {
+    color: #811d1d;
+}
