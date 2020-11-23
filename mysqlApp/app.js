@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const db = require('./utils/database');
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRoutes.routes);
 app.use(shopRoutes);
+
+
 
 // Basic 404 Page not found
 app.use((req, res, next) => {
