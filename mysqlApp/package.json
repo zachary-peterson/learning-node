@@ -10,8 +10,10 @@
     "express-handlebars": "^3.0.2",
     "fkill": "^7.0.1",
     "jslint": "^0.12.1",
+    "mysql2": "^2.2.5",
     "nodemon": "^2.0.6",
-    "pug": "^3.0.0"
+    "pug": "^3.0.0",
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {},
   "scripts": {
