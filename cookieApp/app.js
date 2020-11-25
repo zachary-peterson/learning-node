@@ -31,7 +31,7 @@ app.use(authRoutes);
 
 // Basic 404 Page not found
 app.use((req, res, next) => {
-    res.status(404).render('404', {docTitle: '404 Not Found', path: 'path'});
+    res.status(404).render('404', {docTitle: '404 Not Found', path: 'path', isAuthenticated: req.isLoggedIn});
 });
 
 mongoose.connect('mongodb+srv://admin:pastword@cluster0.zbc2y.mongodb.net/shop?retryWrites=true&w=majority')
