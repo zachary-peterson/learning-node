@@ -19,6 +19,61 @@ const userSchema = new Schema({
     }
 });
 
+userSchema.methods.addToCart = function(product) {
+    const cartItemIndex = this.cart.items.findIndex(cp => {
+        return cp.productId.toString() === product._id.toString();
+    });
+    let newQuantity = 1;
+    const updatedCartItems = [...this.cart.items];
+    if (cartItemIndex >= 0) {
+        newQuantity = this.cart.items[cartItemIndex].quantity + 1;
+        updatedCartItems[cartItemIndex].quantity = newQuantity;
+    }else {
+        updatedCartItems.push({productId: product._id, quantity: newQuantity })
+    }
+
+    const updatedCart = {
+        items: updatedCartItems
+    };
+
+    this.cart = updatedCart;
+    return this.save()
+}
+
+userSchema.methods.removeFromCart = function(productId) {
+    const updatedCartItems = this.cart.items.filter(item => {
+        return item.productId.toString() !== productId.toString();
+    });
+    this.cart.items = updatedCartItems;
+    return this.save();
+}
+
+userSchema.methods.addOrder = function() {
+    this.getCart().then(products => {
+        const order = {
+            items: products,
+            user: {
+                _id: new ObjectId(this._id),
+                username: this.username,
+                email: this.email
+            }
+        }
+        return db.collection('orders').insertOne(order)
+    })
+    .then(result => {
+        this.cart = {items: []};
+        return db.collection('users').updateOne(
+            { _id: new ObjectId(this._id) },
+            { $set: { cart: {items: []} } }
+        );
+    });
+}
+
+userSchema.methods.clearCart = function() {
+    this.cart = {items: []};
+    return this.save();
+}
+
 module.exports = mongoose.model('User', userSchema)
 
 // const mongodb = require('mongodb');
