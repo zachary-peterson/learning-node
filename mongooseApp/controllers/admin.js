@@ -18,7 +18,8 @@ exports.postAddProduct = (req, res, next) => {
         title: title,
         price: price,
         description: description,
-        imageUrl: imageUrl
+        imageUrl: imageUrl,
+        userId: req.user
     });
     
     product.save()
@@ -74,6 +75,14 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
     Product.find()
+    // Will select the title and price, 
+    // but exclude the id of the product
+    // .select('title price -_id')
+    // Will populate the user field,
+    // using user ID. The second arguement will
+    // select what fields from the user obj
+    // to return with the product
+    // .populate('userId', 'username')
     .then(products => {
         res.render('admin/products', {
             prods: products, 
