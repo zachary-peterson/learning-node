@@ -90,7 +90,7 @@ exports.getProducts = (req, res, next) => {
             prods: products, 
             docTitle: 'Admin Products', 
             path: '/admin/products',
-            isAuthenticated: req.sessionisLoggedIn
+            isAuthenticated: req.session.isLoggedIn
         });
     }).catch(err => {
         console.log(err);

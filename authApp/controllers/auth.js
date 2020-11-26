@@ -5,8 +5,7 @@ const User = require('../models/user');
 exports.getSignup = (req, res, next) => {
     res.render('auth/signup', {
         path: '/signup',
-        docTitle: 'Sign Up',
-        isAuthenticated: false
+        docTitle: 'Sign Up'
     });
 };
 
@@ -15,7 +14,7 @@ exports.getLogin = (req, res, next) => {
     res.render('auth/login', {
         path: '/login',
         docTitle: 'Login',
-        isAuthenticated: false
+        errorMessage: req.flash('error')
     });
 };
 
@@ -51,6 +50,7 @@ exports.postLogin = (req, res, next) => {
     User.findOne({ email: email })
     .then(user => {
         if (!user) {
+            req.flash('error', 'Invalid email or password')
             return res.redirect('login');
         }
         bcrypt.compare(password, user.password)
