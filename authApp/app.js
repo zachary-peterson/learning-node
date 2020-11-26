@@ -24,9 +24,12 @@ const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session(
-    {secret: 'my secret', resave: false, saveUninitialized: false, store: store}
-    )
+app.use(session({
+    secret: 'my secret', 
+    resave: false, 
+    saveUninitialized: false, 
+    store: store
+})
 );
 
 app.use((req, res, next) => {
@@ -52,19 +55,7 @@ app.use((req, res, next) => {
 
 mongoose.connect(MONGODB_URI)
 .then(result => {
-    User.findOne().then(user => {
-        if (!user) {
-            const user = new User({
-                username: 'Zach',
-                email: 'z@z.c',
-                cart: {
-                    items: []
-                }
-            });
-        user.save();
-        }
-    })
     app.listen(3000);
 }).catch(err => {
     console.log(err);
-})
+});
